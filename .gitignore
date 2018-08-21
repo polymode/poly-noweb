@@ -1,0 +1,14 @@
+*~
+*#
+#*
+auto/
+*\[weaved\]*
+tmp/
+*woven*
+*exported*
+.tmd
+tmp*
+ELPA
+MELPA
+site/
+*autoloads.el
