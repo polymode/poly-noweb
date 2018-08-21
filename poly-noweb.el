@@ -1,4 +1,4 @@
- ;;; poly-noweb.el --- Polymode for noweb -*- lexical-binding: t -*-
+;;; poly-noweb.el --- Polymode for noweb -*- lexical-binding: t -*-
 ;;
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu
