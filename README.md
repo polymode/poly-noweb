@@ -6,16 +6,17 @@
 </p>
 
 
-This package provides `poly-noweb-mode` which is a [polymode](https://polymode.github.io) for [noweb](https://en.wikipedia.org/wiki/Noweb).
+This package provides `poly-noweb-mode` - a [polymode] for [noweb].
 
-Detection of major in noweb chunks follows the following rules:
+The detection of the major mode in the [noweb] chunks is done in the following order:
 
- 1. (lang-name) after the chunk head (nw2md spec, e.g. <<name>>= (bash))
- 2. short mode name preceded by a period (e.g. <<name.bash>>=)
- 3. extension of the file name is looked in `auto-mode-alist` (e.g. <<name.cpp>>=)
- 4. local value of noweb-code-mode (for compatibility with noweb-mode)
- 5. local value of `poly-inner-mode'
- 6. `poly-fallback-mode'
+  1. `(lang-name)` after the chunk head as per [nw2md] specification (e.g. `<<name>>= (bash)`)
+  2. short mode name preceded by a period (e.g. `<<name.bash>>=`)
+  3. extension of the file name is looked in `auto-mode-alist` (e.g. `<<name.cpp>>=`)
+  4. local value of `noweb-code-mode` (for compatibility with the original noweb-mode)
+  5. local value of `poly-inner-mode`
+  6. fallback on `poly-fallback-mode`
 
-
-
+[polymode]: https://polymode.github.io/
+[nw2md]: http://www.wiwi.uni-bielefeld.de/lehrbereiche/statoekoinf/comet/mtessmer/Beitraege/nw2md
+[noweb]: https://en.wikipedia.org/wiki/Noweb
