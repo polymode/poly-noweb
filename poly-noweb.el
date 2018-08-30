@@ -56,7 +56,7 @@ to lowest priority):
                   (save-excursion
                     (when (re-search-forward "\\.\\([[:alpha:]]+\\)" eol t)
                       (let ((str (match-string 1)))
-                        (if (pm--get-mode-symbol-from-name str 'no-fallback)
+                        (if (pm--get-mode-symbol-from-name str)
                             str
                           (let ((dummy (concat "a." str)))
                             (cl-loop for (k . v) in auto-mode-alist
@@ -71,29 +71,30 @@ to lowest priority):
      'poly-fallback-mode)))
 
 (defcustom  pm-inner/noweb
-  (pm-inner-chunkmode "noweb"
+  (pm-inner-chunkmode :object-name "noweb"
                       :head-matcher "^[ \t]*<<\\(.*\\)>>="
                       :tail-matcher "^[ \t]*@.*$")
   "Noweb static chunk.
 To be used in derived polymodes when type of chunk is known in
 advance."
-  :group 'innermodes
+  :group 'poly-inner-modes
   :type 'object)
 
 (defcustom  pm-inner/noweb-auto
-  (pm-inner-auto-chunkmode "noweb"
+  (pm-inner-auto-chunkmode :object-name "noweb-auto"
                            :head-matcher "^[ \t]*<<\\(.*\\)>>=.*$"
                            :tail-matcher "^[ \t]*@.*$"
                            :mode-matcher #'poly-noweb-mode-matcher
-                           :allow-nested t)
+                           :can-overlap t)
   "Noweb auto chunk.
 See `poly-noweb-mode-matcher' for how mode of the chunk is
 detected."
-  :group 'innermodes
+  :group 'poly-inner-modes
   :type 'object)
 
 (defcustom pm-poly/noweb
-  (clone pm-poly/latex "noweb"
+  (clone pm-poly/latex
+         :object-name "noweb"
          :innermodes '(pm-inner/noweb-auto)
          :exporters '(pm-exporter/latexmk
                       pm-exporter/pdflatex
@@ -126,7 +127,7 @@ closing \"@\" and a newline if necessary."
       (ess-noweb-update-chunk-vector))))
 
 (defcustom pm-exporter/pdflatex
-  (pm-shell-exporter "pdflatex"
+  (pm-shell-exporter :object-name "pdflatex"
                      :from
                      '(("latex" "\\.tex\\'" "LaTeX" "pdflatex -jobname %b %t %i"))
                      :to
@@ -137,7 +138,7 @@ closing \"@\" and a newline if necessary."
   :type 'object)
 
 (defcustom pm-exporter/lualatex
-  (pm-shell-exporter "LuaLaTeX"
+  (pm-shell-exporter :object-name "LuaLaTeX"
                      :from
                      '(("latex" "\\.tex\\'" "LuaLaTeX" "lualatex -jobname %b %t %i"))
                      :to
@@ -148,7 +149,7 @@ closing \"@\" and a newline if necessary."
   :type 'object)
 
 (defcustom pm-exporter/xelatex
-  (pm-shell-exporter "XeLaTeX"
+  (pm-shell-exporter :object-name "XeLaTeX"
                      :from
                      '(("latex" "\\.tex\\'" "XeLaTeX" "xelatex -jobname %b %t %i"))
                      :to
@@ -159,7 +160,7 @@ closing \"@\" and a newline if necessary."
   :type 'object)
 
 (defcustom pm-exporter/latexmk
-  (pm-shell-exporter "latexmk"
+  (pm-shell-exporter :object-name "latexmk"
                      :from
                      '(("latex" "\\.tex\\'" "LaTeX(MK)" "latexmk -jobname=%b %t %i"))
                      :to
