@@ -71,7 +71,7 @@ to lowest priority):
      'poly-fallback-mode)))
 
 (defcustom  pm-inner/noweb
-  (pm-inner-chunkmode :object-name "noweb"
+  (pm-inner-chunkmode :name "noweb"
                       :head-matcher "^[ \t]*<<\\(.*\\)>>="
                       :tail-matcher "^[ \t]*@.*$")
   "Noweb static chunk.
@@ -81,7 +81,7 @@ advance."
   :type 'object)
 
 (defcustom  pm-inner/noweb-auto
-  (pm-inner-auto-chunkmode :object-name "noweb-auto"
+  (pm-inner-auto-chunkmode :name "noweb-auto"
                            :head-matcher "^[ \t]*<<\\(.*\\)>>=.*$"
                            :tail-matcher "^[ \t]*@.*$"
                            :mode-matcher #'poly-noweb-mode-matcher
@@ -94,7 +94,7 @@ detected."
 
 (defcustom pm-poly/noweb
   (clone pm-poly/latex
-         :object-name "noweb"
+         :name "noweb"
          :innermodes '(pm-inner/noweb-auto)
          :exporters '(pm-exporter/latexmk
                       pm-exporter/pdflatex
@@ -127,7 +127,7 @@ closing \"@\" and a newline if necessary."
       (ess-noweb-update-chunk-vector))))
 
 (defcustom pm-exporter/pdflatex
-  (pm-shell-exporter :object-name "pdflatex"
+  (pm-shell-exporter :name "pdflatex"
                      :from
                      '(("latex" "\\.tex\\'" "LaTeX" "pdflatex -jobname %b %t %i"))
                      :to
@@ -138,7 +138,7 @@ closing \"@\" and a newline if necessary."
   :type 'object)
 
 (defcustom pm-exporter/lualatex
-  (pm-shell-exporter :object-name "LuaLaTeX"
+  (pm-shell-exporter :name "LuaLaTeX"
                      :from
                      '(("latex" "\\.tex\\'" "LuaLaTeX" "lualatex -jobname %b %t %i"))
                      :to
@@ -149,7 +149,7 @@ closing \"@\" and a newline if necessary."
   :type 'object)
 
 (defcustom pm-exporter/xelatex
-  (pm-shell-exporter :object-name "XeLaTeX"
+  (pm-shell-exporter :name "XeLaTeX"
                      :from
                      '(("latex" "\\.tex\\'" "XeLaTeX" "xelatex -jobname %b %t %i"))
                      :to
@@ -160,7 +160,7 @@ closing \"@\" and a newline if necessary."
   :type 'object)
 
 (defcustom pm-exporter/latexmk
-  (pm-shell-exporter :object-name "latexmk"
+  (pm-shell-exporter :name "latexmk"
                      :from
                      '(("latex" "\\.tex\\'" "LaTeX(MK)" "latexmk -jobname=%b %t %i"))
                      :to
