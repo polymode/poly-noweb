@@ -14,7 +14,7 @@ The detection of the major mode in the [noweb] chunks is done in the following o
   2. short mode name preceded by a period (e.g. `<<name.bash>>=`)
   3. extension of the file name is looked in `auto-mode-alist` (e.g. `<<name.cpp>>=`)
   4. local value of `noweb-code-mode` (for compatibility with the original noweb-mode)
-  5. local value of `poly-inner-mode`
+  5. local value of `poly-default-inner-mode`
   6. fallback on `poly-fallback-mode`
 
 [polymode]: https://polymode.github.io/

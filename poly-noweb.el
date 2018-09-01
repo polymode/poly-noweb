@@ -45,7 +45,7 @@ to lowest priority):
  2. short mode name preceded by a period (e.g. <<name.bash>>=)
  3. extension of the file name is looked in `auto-mode-alist' (e.g. <<name.cpp>>=)
  4. local value of noweb-code-mode (for compatibility with noweb-mode)
- 5. local value of `poly-inner-mode'
+ 5. local value of `poly-default-inner-mode'
  6. `poly-fallback-mode'
 "
   (let* ((eol (point-at-eol))
@@ -67,7 +67,7 @@ to lowest priority):
      (and (symbolp str) str)
      (and (boundp 'noweb-code-mode)
           noweb-code-mode)
-     poly-inner-mode
+     poly-default-inner-mode
      'poly-fallback-mode)))
 
 (defcustom  pm-inner/noweb

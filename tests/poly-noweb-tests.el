@@ -28,7 +28,7 @@
 (ert-deftest poly-noweb/modes ()
   ;; fixme: in tests file locals are not hacked in indirect buffers for some
   ;; reason
-  (let ((poly-inner-mode 'pascal-mode))
+  (let ((poly-default-inner-mode 'pascal-mode))
     (pm-test-run-on-file poly-noweb-mode "hello.nw"
       (goto-char (point-min))
       (re-search-forward "return 0;")
