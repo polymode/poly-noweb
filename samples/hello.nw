@@ -30,7 +30,7 @@ print("Hello World!")
 \noindent \ldots and the same in pascal and perl
 
 %% Pick pascal mode from poly-default-inner-mode file local variable
-<<hello>>=  
+<<hello>>=
 (*
 <<licence>>
 *)
