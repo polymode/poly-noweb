@@ -81,10 +81,23 @@ detected."
   :group 'poly-inner-modes
   :type 'object)
 
+(defcustom pm-inner/noweb-inline-code
+  (pm-inner-chunkmode :name "noweb-inline-code"
+                      :head-matcher "\\[\\["
+                      :tail-matcher "\\]\\]"
+                      :head-mode 'host
+                      :tail-mode 'host)
+  "Noweb inline code of the form [[some + code]].
+Code is rendered in the mode specified by the value of
+`noweb-code-mode' or `poly-default-inner-mode'. If both are nil,
+use `poly-fallback-mode'."
+  :group 'poly-inner-modes
+  :type 'object)
+
 (defcustom pm-poly/noweb
   (clone pm-poly/latex
          :name "noweb"
-         :innermodes '(pm-inner/noweb-auto)
+         :innermodes '(pm-inner/noweb-auto pm-inner/noweb-inline-code)
          :exporters '(pm-exporter/latexmk
                       pm-exporter/pdflatex
                       pm-exporter/lualatex

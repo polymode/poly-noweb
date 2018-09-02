@@ -97,3 +97,35 @@
       (should (eq (car span) 'body))
       (should (eq (nth 2 span) (point-max)))
       (delete-region (nth 1 span) (nth 2 span)))))
+
+(ert-deftest poly-noweb/inline-code ()
+  (let ((poly-default-inner-mode 'pascal-mode))
+    (pm-test-run-on-string 'poly-noweb-mode
+      "Function [[checkExpectPasses]] runs a [[check-expect]]
+test and tells if the test passes. If the test does not pass,
+[[checkExpectPasses]] also writes an error
+message. [[checkExpectPasses]]"
+      (goto-char 11)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'latex-mode))
+      (goto-char 12)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'pascal-mode))
+      (goto-char 52)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'pascal-mode))
+      (goto-char 119)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'latex-mode))
+      (goto-char 66)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'latex-mode))
+      (goto-char 125)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'pascal-mode))
+      (goto-char 183)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'pascal-mode))
+      (goto-char 189)
+      (pm-switch-to-buffer)
+      (should (eq major-mode 'latex-mode)))))

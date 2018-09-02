@@ -44,6 +44,8 @@ writeln('Hello world!');
 print "Hello World!\n";
 @
 
+And also in inline python code [[writeln('Hello world!')]]
+
 \section{License}
 Later the same day some lawyer reminded me about licenses.
 So, here it is:
