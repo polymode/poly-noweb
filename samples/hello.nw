@@ -1,4 +1,4 @@
--*- mode: poly-noweb; poly-default-inner-mode: pascal-mode -*-
+-*- mode: poly-noweb; polymode-default-inner-mode: pascal-mode -*-
 
 \section{Hello world}
 % Adapted from https://en.wikipedia.org/wiki/Noweb
@@ -29,7 +29,7 @@ print("Hello World!")
 
 \noindent \ldots and the same in pascal and perl
 
-%% Pick pascal mode from poly-default-inner-mode file local variable
+%% Pick pascal mode from polymode-default-inner-mode file local variable
 <<hello>>=
 (*
 <<licence>>

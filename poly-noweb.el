@@ -37,7 +37,7 @@
 
 (require 'polymode)
 
-(defvaralias 'noweb-code-mode 'poly-default-inner-mode)
+(defvaralias 'noweb-code-mode 'polymode-default-inner-mode)
 
 (defun poly-noweb-mode-matcher ()
   "Match mode of the noweb chunk.
@@ -47,7 +47,7 @@ to lowest priority):
  2. short mode name preceded by a period (e.g. <<name.bash>>=)
  3. extension of the file name is looked in `auto-mode-alist' (e.g. <<name.cpp>>=)
  4. local value of noweb-code-mode (for compatibility with noweb-mode)
- 5. local value of `poly-default-inner-mode'
+ 5. local value of `polymode-default-inner-mode'
  6. `poly-fallback-mode'"
   (let ((eol (point-at-eol)))
     (or (save-excursion
@@ -89,8 +89,8 @@ detected."
                       :tail-mode 'host)
   "Noweb inline code of the form [[some + code]].
 Code is rendered in the mode specified by the value of
-`noweb-code-mode' or `poly-default-inner-mode'. If both are nil,
-use `poly-fallback-mode'."
+`polymode-default-inner-mode' (or `noweb-code-mode'). If nil or
+not a function, use `poly-fallback-mode'."
   :group 'poly-inner-modes
   :type 'object)
 

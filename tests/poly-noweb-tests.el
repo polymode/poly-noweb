@@ -28,7 +28,7 @@
 (ert-deftest poly-noweb/modes ()
   ;; fixme: in tests file locals are not hacked in indirect buffers for some
   ;; reason
-  (let ((poly-default-inner-mode 'pascal-mode))
+  (let ((polymode-default-inner-mode 'pascal-mode))
     (pm-test-run-on-file poly-noweb-mode "hello.nw"
       (goto-char (point-min))
       (re-search-forward "return 0;")
@@ -99,7 +99,7 @@
       (delete-region (nth 1 span) (nth 2 span)))))
 
 (ert-deftest poly-noweb/inline-code ()
-  (let ((poly-default-inner-mode 'pascal-mode))
+  (let ((noweb-code-mode 'pascal-mode))
     (pm-test-run-on-string 'poly-noweb-mode
       "Function [[checkExpectPasses]] runs a [[check-expect]]
 test and tells if the test passes. If the test does not pass,
