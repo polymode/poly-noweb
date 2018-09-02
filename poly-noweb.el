@@ -37,6 +37,8 @@
 
 (require 'polymode)
 
+(defvaralias 'noweb-code-mode 'poly-default-inner-mode)
+
 (defun poly-noweb-mode-matcher ()
   "Match mode of the noweb chunk.
 There are several ways to specify noweb chunk mode (from highest
@@ -46,29 +48,16 @@ to lowest priority):
  3. extension of the file name is looked in `auto-mode-alist' (e.g. <<name.cpp>>=)
  4. local value of noweb-code-mode (for compatibility with noweb-mode)
  5. local value of `poly-default-inner-mode'
- 6. `poly-fallback-mode'
-"
-  (let* ((eol (point-at-eol))
-         (str (or (save-excursion
-                    (when (and (re-search-forward ">>=" eol t)
-                               (re-search-forward "(\\(.*\\))" eol t))
-                      (match-string-no-properties 1)))
-                  (save-excursion
-                    (when (re-search-forward "\\.\\([[:alpha:]]+\\)" eol t)
-                      (let ((str (match-string 1)))
-                        (if (pm--get-mode-symbol-from-name str)
-                            str
-                          (let ((dummy (concat "a." str)))
-                            (cl-loop for (k . v) in auto-mode-alist
-                                     if (string-match-p k dummy) return v)))))))))
-
-    (or
-     (and (stringp str) (> (length str) 0) str)
-     (and (symbolp str) str)
-     (and (boundp 'noweb-code-mode)
-          noweb-code-mode)
-     poly-default-inner-mode
-     'poly-fallback-mode)))
+ 6. `poly-fallback-mode'"
+  (let ((eol (point-at-eol)))
+    (or (save-excursion
+          (when (and (re-search-forward ">>=" eol t)
+                     (re-search-forward "(\\(.*\\))" eol t))
+            (match-string-no-properties 1)))
+        (save-excursion
+          (when (re-search-forward "\\.\\([[:alpha:]]+\\)" eol t)
+            (let ((str (match-string 1)))
+              (pm-get-mode-symbol-from-name str)))))))
 
 (defcustom  pm-inner/noweb
   (pm-inner-chunkmode :name "noweb"
