@@ -66,7 +66,7 @@ to lowest priority):
   "Noweb static chunk.
 To be used in derived polymodes when type of chunk is known in
 advance."
-  :group 'poly-inner-modes
+  :group 'poly-innermodes
   :type 'object)
 
 (defcustom  pm-inner/noweb-auto
@@ -78,7 +78,7 @@ advance."
   "Noweb auto chunk.
 See `poly-noweb-mode-matcher' for how mode of the chunk is
 detected."
-  :group 'poly-inner-modes
+  :group 'poly-innermodes
   :type 'object)
 
 (defcustom pm-inner/noweb-inline-code
@@ -91,7 +91,7 @@ detected."
 Code is rendered in the mode specified by the value of
 `polymode-default-inner-mode' (or `noweb-code-mode'). If nil or
 not a function, use `poly-fallback-mode'."
-  :group 'poly-inner-modes
+  :group 'poly-innermodes
   :type 'object)
 
 (defcustom pm-poly/noweb
