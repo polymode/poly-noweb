@@ -94,9 +94,17 @@ not a function, use `poly-fallback-mode'."
   :group 'poly-innermodes
   :type 'object)
 
+(defcustom pm-host/latex-for-noweb
+  (clone pm-host/latex
+         :name "latex-for-noweb"
+         :protect-font-lock t
+         :protect-syntax t)
+  "LaTeX host for noweb.")
+
 (defcustom pm-poly/noweb
   (clone pm-poly/latex
          :name "noweb"
+         :hostmode 'pm-host/latex-for-noweb
          :innermodes '(pm-inner/noweb-auto pm-inner/noweb-inline-code)
          :exporters '(pm-exporter/latexmk
                       pm-exporter/pdflatex
