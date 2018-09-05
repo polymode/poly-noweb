@@ -98,7 +98,8 @@ not a function, use `poly-fallback-mode'."
   (clone pm-host/latex
          :name "latex-for-noweb"
          :protect-font-lock t
-         :protect-syntax t)
+         :protect-syntax t
+         :protect-indent t)
   "LaTeX host for noweb.")
 
 (defcustom pm-poly/noweb

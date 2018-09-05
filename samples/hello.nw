@@ -32,8 +32,8 @@ print("Hello World!")
 %% Pick pascal mode from polymode-default-inner-mode file local variable
 <<hello>>=
 (*
-<<licence>>
-*)
+ <<licence>>
+ *)
 writeln('Hello world!');
 
 // Nested chunks are allowed in noweb
