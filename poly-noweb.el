@@ -71,8 +71,8 @@ advance."
 
 (defcustom  pm-inner/noweb-auto
   (pm-inner-auto-chunkmode :name "noweb-auto"
-                           :head-matcher "^[ \t]*<<\\(.*\\)>>=.*\n"
-                           :tail-matcher "^[ \t]*@.*$"
+                           :head-matcher (cons "^[ \t]*\\(<<.*>>=.*\n\\)" 1)
+                           :tail-matcher (cons "^[ \t]*\\(@.*\\)$" 1)
                            :mode-matcher #'poly-noweb-mode-matcher
                            :can-overlap t)
   "Noweb auto chunk.
