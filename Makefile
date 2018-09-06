@@ -1,7 +1,7 @@
 MODULE = poly-noweb
 export EMACS ?= emacs
 EMACS_VERSION = $(shell ${EMACS} -Q --batch --eval "(princ emacs-version)")
-ELPA_DIR := ELPA/$(EMACS_VERSION)
+ELPA_DIR := .ELPA/$(EMACS_VERSION)
 EMACSRUN = $(EMACS) -Q -L . -L modes -L tests -L $(ELPA_DIR)
 EMACSBATCH = $(EMACSRUN) --batch
 
@@ -39,9 +39,9 @@ melpa: version
 elpa: melpa
 
 start: version
-	$(EMACSRUN) -L ~/VC/markdown-mode/ \
-		--load tests/*.el \
-		--file tests/poly-markdown-tests.el 
+	$(EMACSRUN) -L . \
+		--load targets/melpa.el
+		--load tests/*.el
 
 test: version
 	@echo "******************* Testing $(MODULE) ***************************"

@@ -1,5 +1,5 @@
 
-(require 'polymode-test)
+(require 'polymode-test-utils)
 (require 'poly-noweb)
 
 (ert-deftest poly-noweb/changes ()
