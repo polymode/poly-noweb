@@ -100,7 +100,9 @@ not a function, use `poly-fallback-mode'."
          :protect-font-lock t
          :protect-syntax t
          :protect-indent t)
-  "LaTeX host for noweb.")
+  "LaTeX host for noweb."
+  :group 'pm-innermoes
+  :type 'object)
 
 (defcustom pm-poly/noweb
   (clone pm-poly/latex
