@@ -128,7 +128,7 @@ If given an numerical argument, it simply insert `<'. Otherwise,
 if at the beginning of a line in a host chunk insert \"<<>>=\", a
 closing \"@\" and a newline if necessary."
   (interactive "P")
-  (if (or arg (not (eq pm/type 'host)))
+  (if (or arg (car (pm-innermost-span)))
       (self-insert-command (if (numberp arg) arg 1))
     (if (not (looking-back "^[ \t]*"))
         (self-insert-command 1)
