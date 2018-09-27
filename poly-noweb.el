@@ -61,8 +61,8 @@ to lowest priority):
 
 (defcustom  pm-inner/noweb
   (pm-inner-chunkmode :name "noweb"
-                      :head-matcher "^[ \t]*<<\\(.*\\)>>="
-                      :tail-matcher "^[ \t]*@.*$")
+                      :head-matcher (cons "^[ \t]*\\(<<\\(.*\\)>>=.*\n\\)" 1)
+                      :tail-matcher (cons "^[ \t]*\\(@.*\\)$" 1))
   "Noweb static chunk.
 To be used in derived polymodes when type of chunk is known in
 advance."
