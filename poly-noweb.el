@@ -99,7 +99,7 @@ not a function, use `poly-fallback-mode'."
          :name "latex-for-noweb"
          :protect-font-lock t
          :protect-syntax t
-         :protect-indent t)
+         :protect-indent nil)
   "LaTeX host for noweb."
   :group 'pm-innermoes
   :type 'object)
