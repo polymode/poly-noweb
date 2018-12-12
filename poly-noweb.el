@@ -136,8 +136,7 @@ closing \"@\" and a newline if necessary."
       (save-excursion
         (insert ">>=\n\n@ ")
         (unless(looking-at "\\s *$")
-          (newline)))
-      (ess-noweb-update-chunk-vector))))
+          (newline))))))
 
 (defcustom pm-exporter/pdflatex
   (pm-shell-exporter :name "pdflatex"
