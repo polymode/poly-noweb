@@ -69,6 +69,15 @@ advance."
   :group 'poly-innermodes
   :type 'object)
 
+(defcustom pm-inner/noweb-emacs-lisp
+  (clone pm-inner/noweb
+         :name "noweb-elisp"
+         :mode 'emacs-lisp-mode)
+  "Noweb elisp chunkmode.
+Can be used to develop modes for literate tests."
+  :group 'poly-innermodes
+  :type 'object)
+
 (defcustom  pm-inner/noweb-auto
   (pm-inner-auto-chunkmode :name "noweb-auto"
                            :head-matcher (cons "^[ \t]*\\(<<.*>>=.*\n\\)" 1)
