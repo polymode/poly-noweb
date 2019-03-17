@@ -37,6 +37,16 @@
 
 (require 'polymode)
 
+(define-obsolete-variable-alias 'pm-inner/noweb 'poly-noweb-innermode "v0.2")
+(define-obsolete-variable-alias 'pm-inner/noweb-emacs-lisp 'poly-noweb-emacs-lisp-innermode "v0.2")
+(define-obsolete-variable-alias 'pm-inner/noweb-auto 'poly-noweb-auto-innermode "v0.2")
+(define-obsolete-variable-alias 'pm-inner/noweb-inline-code 'poly-noweb-inline-innermode "v0.2")
+(define-obsolete-variable-alias 'pm-host/latex-for-noweb 'poly-noweb-latex-hostmode "v0.2")
+(define-obsolete-variable-alias 'pm-exporter/pdflatex 'poly-noweb-pdflatex-exporter "v0.2")
+(define-obsolete-variable-alias 'pm-exporter/lualatex 'poly-noweb-lualatex-exporter "v0.2")
+(define-obsolete-variable-alias 'pm-exporter/xelatex 'poly-noweb-xelatex-exporter "v0.2")
+(define-obsolete-variable-alias 'pm-exporter/latexmk 'poly-noweb-latexmk-exporter "v0.2")
+
 (defvaralias 'noweb-code-mode 'polymode-default-inner-mode)
 
 (defun poly-noweb-mode-matcher ()
@@ -59,77 +69,52 @@ to lowest priority):
             (let ((str (match-string 1)))
               (pm-get-mode-symbol-from-name str)))))))
 
-(defcustom  pm-inner/noweb
-  (pm-inner-chunkmode :name "noweb"
-                      :head-matcher (cons "^[ \t]*\\(<<\\(.*\\)>>=.*\n\\)" 1)
-                      :tail-matcher (cons "^[ \t]*\\(@.*\\)$" 1))
+(define-innermode poly-noweb-innermode nil
   "Noweb static chunk.
 To be used in derived polymodes when type of chunk is known in
 advance."
-  :group 'poly-innermodes
-  :type 'object)
+  :head-matcher (cons "^[ \t]*\\(<<\\(.*\\)>>=.*\n\\)" 1)
+  :tail-matcher (cons "^[ \t]*\\(@.*\\)$" 1))
 
-(defcustom pm-inner/noweb-emacs-lisp
-  (clone pm-inner/noweb
-         :name "noweb-elisp"
-         :mode 'emacs-lisp-mode)
+(define-innermode poly-noweb-emacs-lisp-innermode poly-noweb-innermode
   "Noweb elisp chunkmode.
 Can be used to develop modes for literate tests."
-  :group 'poly-innermodes
-  :type 'object)
+  :mode 'emacs-lisp-mode)
 
-(defcustom  pm-inner/noweb-auto
-  (pm-inner-auto-chunkmode :name "noweb-auto"
-                           :head-matcher (cons "^[ \t]*\\(<<.*>>=.*\n\\)" 1)
-                           :tail-matcher (cons "^[ \t]*\\(@.*\\)$" 1)
-                           :mode-matcher #'poly-noweb-mode-matcher
-                           :can-overlap t)
+(define-auto-innermode poly-noweb-auto-innermode nil
   "Noweb auto chunk.
 See `poly-noweb-mode-matcher' for how mode of the chunk is
 detected."
-  :group 'poly-innermodes
-  :type 'object)
+  :head-matcher (cons "^[ \t]*\\(<<.*>>=.*\n\\)" 1)
+  :tail-matcher (cons "^[ \t]*\\(@.*\\)$" 1)
+  :mode-matcher #'poly-noweb-mode-matcher
+  :can-overlap t)
 
-(defcustom pm-inner/noweb-inline-code
-  (pm-inner-chunkmode :name "noweb-inline-code"
-                      :head-matcher "\\[\\["
-                      :tail-matcher "\\]\\]"
-                      :head-mode 'host
-                      :tail-mode 'host)
+(define-innermode poly-noweb-inline-innermode nil
   "Noweb inline code of the form [[some + code]].
 Code is rendered in the mode specified by the value of
 `polymode-default-inner-mode' (or `noweb-code-mode'). If nil or
 not a function, use `poly-fallback-mode'."
-  :group 'poly-innermodes
-  :type 'object)
+  :head-matcher "\\[\\["
+  :tail-matcher "\\]\\]"
+  :head-mode 'host
+  :tail-mode 'host)
 
-(defcustom pm-host/latex-for-noweb
-  (clone pm-host/latex
-         :name "latex-for-noweb"
-         :protect-font-lock t
-         :protect-syntax t
-         :protect-indent nil)
-  "LaTeX host for noweb."
-  :group 'pm-innermoes
-  :type 'object)
-
-(defcustom pm-poly/noweb
-  (clone pm-poly/latex
-         :name "noweb"
-         :hostmode 'pm-host/latex-for-noweb
-         :innermodes '(pm-inner/noweb-auto pm-inner/noweb-inline-code)
-         :exporters '(pm-exporter/latexmk
-                      pm-exporter/pdflatex
-                      pm-exporter/lualatex
-                      pm-exporter/xelatex)
-         :keylist '(("<" . poly-noweb-electric-<)))
-  "Noweb polymode configuration."
-  :group 'polymodes
-  :type 'object)
+(define-hostmode poly-noweb-latex-hostmode poly-latex-hostmode
+  :protect-font-lock t
+  :protect-syntax t
+  :protect-indent nil)
 
 ;;;###autoload (autoload 'poly-noweb-mode "poly-noweb")
-(define-polymode poly-noweb-mode pm-poly/noweb)
-(add-to-list 'auto-mode-alist '("\\.nw$" . poly-noweb-mode))
+(define-polymode poly-noweb-mode poly-latex-root-polymode
+  :hostmode 'poly-noweb-latex-hostmode
+  :innermodes '(poly-noweb-auto-innermode
+                poly-noweb-inline-innermode)
+  :exporters '(poly-noweb-latexmk-exporter
+               poly-noweb-pdflatex-exporter
+               poly-noweb-lualatex-exporter
+               poly-noweb-xelatex-exporter)
+  :keylist '(("<" . poly-noweb-electric-<)))
 
 (defun poly-noweb-electric-< (arg)
   "Auto insert noweb chunk if at bol followed by white space.
@@ -147,7 +132,7 @@ closing \"@\" and a newline if necessary."
         (unless(looking-at "\\s *$")
           (newline))))))
 
-(defcustom pm-exporter/pdflatex
+(defcustom poly-noweb-pdflatex-exporter
   (pm-shell-exporter :name "pdflatex"
                      :from
                      '(("latex" "\\.tex\\'" "LaTeX" "pdflatex -jobname %b %t %i"))
@@ -158,7 +143,7 @@ closing \"@\" and a newline if necessary."
   :group 'polymode-export
   :type 'object)
 
-(defcustom pm-exporter/lualatex
+(defcustom poly-noweb-lualatex-exporter
   (pm-shell-exporter :name "LuaLaTeX"
                      :from
                      '(("latex" "\\.tex\\'" "LuaLaTeX" "lualatex -jobname %b %t %i"))
@@ -169,7 +154,7 @@ closing \"@\" and a newline if necessary."
   :group 'polymode-export
   :type 'object)
 
-(defcustom pm-exporter/xelatex
+(defcustom poly-noweb-xelatex-exporter
   (pm-shell-exporter :name "XeLaTeX"
                      :from
                      '(("latex" "\\.tex\\'" "XeLaTeX" "xelatex -jobname %b %t %i"))
@@ -180,7 +165,7 @@ closing \"@\" and a newline if necessary."
   :group 'polymode-export
   :type 'object)
 
-(defcustom pm-exporter/latexmk
+(defcustom poly-noweb-latexmk-exporter
   (pm-shell-exporter :name "latexmk"
                      :from
                      '(("latex" "\\.tex\\'" "LaTeX(MK)" "latexmk -jobname=%b %t %i"))
@@ -194,6 +179,9 @@ closing \"@\" and a newline if necessary."
   "Shell latexmk dvi, ps and pdf exporter."
   :group 'polymode-export
   :type 'object)
+
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.nw\\'" . poly-noweb-mode))
 
 (provide 'poly-noweb)
 ;;; poly-noweb.el ends here
