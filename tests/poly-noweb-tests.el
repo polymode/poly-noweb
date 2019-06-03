@@ -133,3 +133,6 @@ message. [[checkExpectPasses]]"
 (ert-deftest poly-noweb/indentation ()
   (let ((polymode-default-inner-mode 'pascal-mode))
     (pm-test-indentation poly-noweb-mode "hello.nw")))
+
+(ert-deftest infra/poly-noweb/map-over-modes ()
+  (pm-test-map-over-modes poly-noweb-mode "hello.nw"))
