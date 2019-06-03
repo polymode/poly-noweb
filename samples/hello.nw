@@ -34,7 +34,7 @@ print("Hello World!")
 (*
  <<licence>>
  *)
-writeln('Hello world!');
+writeln("Hello world!");
 
 // Nested chunks are allowed in noweb
 <<hello.perl>>=
@@ -44,7 +44,7 @@ writeln('Hello world!');
 print "Hello World!\n";
 @
 
-And also in inline python code [[writeln('Hello world!')]]
+And also in inline python code [[writeln("Hello world!")]]
 
 \section{License}
 Later the same day some lawyer reminded me about licenses.
