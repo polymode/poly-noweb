@@ -12,3 +12,6 @@ tmp*
 .MELPA
 site/
 *autoloads.el
+*.elc
+*.html
+*.pdf
