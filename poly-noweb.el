@@ -114,7 +114,7 @@ not a function, use `poly-fallback-mode'."
                poly-noweb-pdflatex-exporter
                poly-noweb-lualatex-exporter
                poly-noweb-xelatex-exporter)
-  :keylist '(("<" . poly-noweb-electric-<)))
+  :keylist '("<" poly-noweb-electric-<))
 
 (defun poly-noweb-electric-< (arg)
   "Auto insert noweb chunk if at bol followed by white space.
